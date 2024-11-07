@@ -26,7 +26,7 @@ const ViewInventory = () => {
       (product) => product.status === "draft"
     ).length;
     const completed = products.filter(
-      (product) => product.status !== "draft"
+      (product) => product.status !== "published"
     ).length;
     setPendingCount(pending);
     setCompletedCount(completed);
@@ -47,6 +47,7 @@ const ViewInventory = () => {
   const calculateTotalPrice = (sellingPrice, quantity) => {
     return sellingPrice * quantity;
   };
+  const totalcount = rows.length
   useEffect(() => {
     const updatedRows = products.map((product) => ({
       id: product.id,
@@ -347,7 +348,7 @@ const ViewInventory = () => {
                 }}
               >
                 <Typography variant="body2">
-                  All Orders: {pendingCount}
+                  All Orders: {totalcount}
                 </Typography>
                 <Typography variant="body2">Pending: {pendingCount}</Typography>
                 <Typography variant="body2">

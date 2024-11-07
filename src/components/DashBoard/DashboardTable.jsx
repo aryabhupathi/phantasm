@@ -13,43 +13,16 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 const columns = [
-  {
-    field: "image",
-    headerName: "Image",
-    width: 75,
-    renderCell: (params) => (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%",
-          height: "100%",
-        }}
-      >
-        <img
-          src={params.value}
-          alt={params.row.productName}
-          style={{
-            width: 30,
-            height: 30,
-            objectFit: "cover",
-            borderRadius: "5px",
-          }}
-        />
-      </Box>
-    ),
-  },
   { field: "productName", headerName: "Product Name", flex: 1, width: 100 },
   { field: "category", headerName: "Category", flex: 1, width: 100 },
   {
     field: "unitPrice",
     headerName: "Unit Price ($)",
     type: "number",
-    width: 80,
+    width: 100,
   },
-  { field: "inStock", headerName: "In-Stock", type: "number", width: 80 },
-  { field: "discount", headerName: "Discount (%)", type: "number", width: 80 },
+  { field: "inStock", headerName: "In-Stock", type: "number", width: 100 },
+  { field: "discount", headerName: "Discount (%)", type: "number", width: 100 },
   {
     field: "totalValue",
     headerName: "Total Value ($)",
@@ -250,7 +223,7 @@ const Dashboardtable = () => {
     <Grid container spacing={2}>
       <Grid
         item
-       size={{xs:12}}
+        xs={12}
         sx={{
           display: "flex",
           flexDirection: { xs: "column", sm: "row" },
@@ -280,7 +253,7 @@ const Dashboardtable = () => {
           }}
         />
       </Grid>
-      <Grid item size={{xs:12}}>
+      <Grid item  xs={12}>
         <DataGrid
           rows={filteredRows}
           columns={columns}
