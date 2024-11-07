@@ -8,6 +8,7 @@ import {
   CardContent,
   Paper,
   Box,
+  Chip,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useDataContext } from "../DataProvider";
@@ -47,7 +48,7 @@ const ViewInventory = () => {
   const calculateTotalPrice = (sellingPrice, quantity) => {
     return sellingPrice * quantity;
   };
-  const totalcount = rows.length
+  const totalcount = rows.length;
   useEffect(() => {
     const updatedRows = products.map((product) => ({
       id: product.id,
@@ -59,7 +60,7 @@ const ViewInventory = () => {
       orderType: product.orderType,
       discountPercentage: product.discountPercentage || 0,
       totalPrice: product.sellingPrice * product.quantity,
-      dateAdded: product.dateAdded,
+      dateAdded: `${product.dateAdded} ${product.timeAdded}`,
       timeAdded: product.timeAdded,
     }));
     setRows(updatedRows);
@@ -73,16 +74,30 @@ const ViewInventory = () => {
     setCompletedCount(completed);
   }, [products]);
   const columns = [
-    { field: "productName", headerName: "Product Name", width: 180 },
-    { field: "category", headerName: "Category", width: 150 },
-    { field: "sellingPrice", headerName: "Unit Price", width: 120 },
-    { field: "quantity", headerName: "Quantity", width: 120 },
+    { field: "dateAdded", headerName: "Date Added", width: 180 },
+    { field: "orderType", headerName: "Order Type", width: 150 },
+    { field: "sellingPrice", headerName: "Unit Price", width: 150 },
+    { field: "quantity", headerName: "Quantity", width: 150 },
     { field: "discountPercentage", headerName: "Discount %", width: 120 },
     { field: "totalPrice", headerName: "Total Price", width: 120 },
-    { field: "status", headerName: "Status", width: 120 },
-    { field: "orderType", headerName: "Order Type", width: 150 },
-    { field: "dateAdded", headerName: "Date Added", width: 180 },
-    { field: "timeAdded", headerName: "Time Added", width: 180 },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 120,
+      renderCell: (params) => {
+        const status = params.value;
+        return (
+          <Chip
+            label={status}
+            color={status === "Completed" ? "success" : "warning"}
+            size="small"
+            sx={{
+              textTransform: "capitalize",
+            }}
+          />
+        );
+      },
+    },
   ];
   const generateRandomNumber = (max) => {
     return Math.floor(Math.random() * max);
@@ -179,7 +194,7 @@ const ViewInventory = () => {
                 justifyContent: "space-between",
               }}
             >
-              <Typography variant="h6">Last Order</Typography>
+              <Typography variant="subtitle1" fontWeight={"bold"}>Last Order</Typography>
               <Box
                 sx={{
                   display: "flex",
@@ -189,13 +204,13 @@ const ViewInventory = () => {
                 }}
               >
                 <Box>
-                  <Typography variant="h6">Price</Typography>
+                  <Typography variant="body1">Price</Typography>
                   <Typography variant="body2">
                     {firstProduct?.sellingPrice || "N/A"}
                   </Typography>
                 </Box>
                 <Box>
-                  <Typography variant="body2">InStock</Typography>
+                  <Typography variant="body1">InStock</Typography>
                   <Typography variant="body2">
                     {firstProduct?.quantity || "N/A"}
                   </Typography>
@@ -234,12 +249,11 @@ const ViewInventory = () => {
               <Box
                 sx={{
                   display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
+                  flexDirection:'column',
                   marginTop: "auto",
                 }}
               >
-                <Typography variant="h6">Total Price</Typography>
+                <Typography variant="body1">Total Price</Typography>
                 <Typography variant="body2">
                   {firstProduct
                     ? calculateTotalPrice(
@@ -288,7 +302,7 @@ const ViewInventory = () => {
                 }}
               >
                 <Box>
-                  <Typography variant="h6">Views</Typography>
+                  <Typography variant="body1">Views</Typography>
                   <Typography variant="body2">
                     {generateRandomNumber(100)}
                   </Typography>

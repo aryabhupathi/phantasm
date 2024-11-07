@@ -281,19 +281,17 @@ const NewInventory = () => {
     if (!formData.coverImage) tempErrors.coverImage = "Cover Image is required";
     if (!formData.additionalImages)
       tempErrors.additionalImages = "Additional Image is required";
-
-    // Validate if expiryDate is set, then validate expiryDateValue
     if (formData.expiryDate && !formData.expiryDateValue) {
       tempErrors.expiryDateValue = "Expiry Date is required";
     }
 
     setErrors(tempErrors);
-    return Object.keys(tempErrors).length === 0; // Return true if no errors
+    return Object.keys(tempErrors).length === 0; 
   };
   const handleSubmit = (status) => (e) => {
     e.preventDefault();
 
-    if (!validateForm()) return; // If validation fails, prevent form submission
+    if (!validateForm()) return;
 
     if (editingProduct) {
       updateProduct({ ...formData, status });
@@ -309,6 +307,8 @@ const NewInventory = () => {
         container
         spacing={4}
         padding={4}
+        justifyContent={'center'}
+        alignContent={'center'}
         sx={{ backgroundColor: "#F4F5FA" }}
       >
         <Grid
@@ -355,8 +355,8 @@ const NewInventory = () => {
             </Button>
           </Grid>
         </Grid>
-        <Grid container spacing={2} alignItems="stretch">
-          <Grid item xs={12} sm={12} md={8}>
+        <Grid container spacing={2} alignItems="stretch" ml={2}>
+          <Grid item xs={12} sm={12} md={8} spacing={2}>
             <Paper
               sx={{
                 backgroundColor: "white",
@@ -615,7 +615,9 @@ const NewInventory = () => {
               </Grid>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6} md={4} sx={{
+    mt: { xs: 2, sm: 3, md: 0 }, 
+  }}>
             <Paper
               sx={{
                 backgroundColor: "white",
