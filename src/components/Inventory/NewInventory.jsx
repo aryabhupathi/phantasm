@@ -115,12 +115,9 @@ const NewInventory = () => {
       tempErrors.shortDescription = "Shortt Description is required";
     if (!formData.longDescription)
       tempErrors.longDescription = "Long Description is required";
-    if (!formData.discount) tempErrors.discount = "Discount Type is required";
     if (!formData.dateAdded) tempErrors.dateAdded = "Date is required";
     if (!formData.timeAdded) tempErrors.timeAdded = "Time is required";
     if (!formData.coverImage) tempErrors.coverImage = "Cover Image is required";
-    if (!formData.additionalImages)
-      tempErrors.additionalImages = "Additional Image is required";
     if (formData.expiryDate && !formData.expiryDateValue) {
       tempErrors.expiryDateValue = "Expiry Date is required";
     }
@@ -343,11 +340,6 @@ const NewInventory = () => {
                             <MenuItem value="percentage">Percentage</MenuItem>
                             <MenuItem value="flat-rate">Flat Rate</MenuItem>
                           </DarkSelect>
-                          {errors.discountType && (
-                            <Typography color="error" variant="body2">
-                              {errors.discountType}
-                            </Typography>
-                          )}
                         </FormControl>
                       </Grid>
                       <Grid item xs={12} sm={6}>
@@ -360,8 +352,6 @@ const NewInventory = () => {
                           variant="outlined"
                           fullWidth
                           margin="normal"
-                          error={Boolean(errors.discountPercentage)}
-                          helperText={errors.discountPercentage}
                         />
                       </Grid>
                     </Grid>
@@ -382,8 +372,6 @@ const NewInventory = () => {
                       name="expiryDateValue"
                       value={formData.expiryDateValue}
                       onChange={handleInputChange}
-                      error={Boolean(errors.expiryDateValue)}
-                      helperText={errors.expiryDateValue}
                     />
                   )}
                 </Grid>
@@ -438,7 +426,6 @@ const NewInventory = () => {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <DarkTextField
-                        label="Time Added"
                         name="timeAdded"
                         value={formData.timeAdded}
                         onChange={handleInputChange}
@@ -540,7 +527,7 @@ const NewInventory = () => {
                   {errors.additionalImages}
                 </Typography>
               )}
-              <Grid
+              {/* <Grid
                 container
                 spacing={2}
                 sx={{ overflowY: "auto", maxHeight: 200 }}
@@ -578,7 +565,49 @@ const NewInventory = () => {
                     </Box>
                   </Grid>
                 ))}
-              </Grid>
+              </Grid> */}
+              <Grid container spacing={2} sx={{ overflowY: "auto", maxHeight: 200 }}>
+  {formData.additionalImages && formData.additionalImages.length > 0 ? (
+    formData.additionalImages.map((imageUrl, index) => (
+      <Grid item xs={6} key={index}>
+        <Box sx={{ position: "relative" }}>
+          <img
+            src={imageUrl}
+            alt="not found"
+            style={{
+              width: "100%",
+              borderRadius: "8px",
+              height: "auto",
+            }}
+          />
+          <Box
+            size="small"
+            onClick={() => handleDeleteImage(index)}
+            sx={{
+              position: "absolute",
+              top: 8,
+              right: 8,
+              backgroundColor: "#fff",
+              borderRadius: "50%",
+              color: "inherit",
+              "&:hover": {
+                color: "red",
+                backgroundColor: "#f0f0f0",
+              },
+            }}
+          >
+            <DeleteForeverIcon fontSize="small" />
+          </Box>
+        </Box>
+      </Grid>
+    ))
+  ) : (
+    <Grid item xs={12}>
+      <Box sx={{ textAlign: "center", padding: "10px" }}>No images available</Box>
+    </Grid>
+  )}
+</Grid>
+
             </Paper>
           </Grid>
         </Grid>

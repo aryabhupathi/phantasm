@@ -36,7 +36,7 @@ const ViewInventory = () => {
     const product = rows.find((row) => row.id === id);
     if (product) {
       setProductToEdit(product);
-      navigate("/NewProduct");
+      navigate("/new-inventory");
     }
   };
 
@@ -55,6 +55,7 @@ const ViewInventory = () => {
       productName: product.productName,
       category: product.category,
       sellingPrice: product.sellingPrice,
+      costPrice: product.costPrice,
       quantity: product.quantity,
       status: product.status === "draft" ? "Pending" : "Completed",
       orderType: product.orderType,
@@ -62,6 +63,9 @@ const ViewInventory = () => {
       totalPrice: product.sellingPrice * product.quantity,
       dateAdded: `${product.dateAdded} ${product.timeAdded}`,
       timeAdded: product.timeAdded,
+      shortDescription:product.shortDescription,
+      longDescription:product.longDescription,
+      coverImage:product.coverImage
     }));
     setRows(updatedRows);
     const pending = products.filter(
