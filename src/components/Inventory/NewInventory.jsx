@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  TextField,
   Button,
   FormControlLabel,
   Box,
@@ -9,7 +8,6 @@ import {
   Typography,
   MenuItem,
   FormControl,
-  Select,
   Switch,
   IconButton,
   InputLabel,
@@ -17,166 +15,17 @@ import {
 } from "@mui/material";
 import { useDataContext } from "../DataProvider";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import styled from "@emotion/styled";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-const DarkQuill = styled(ReactQuill)(() => ({
-  backgroundColor: "#F4F5FE",
-  color: "#000",
-  borderRadius: "8px",
-  padding: "10px",
-  ".ql-editor": {
-    backgroundColor: "#F4F5FE",
-    color: "black",
-  },
-  "&.ql-container.ql-snow": {
-    border: "1px solid #000",
-  },
-  "&:focus .ql-container.ql-snow": {
-    borderColor: "#000",
-  },
-}));
-const DarkTextField = styled(TextField)(() => ({
-  "& .MuiInputBase-root": {
-    backgroundColor: "#F4F5FE",
-    color: "#000",
-    borderRadius: "8px",
-    borderColor: "red",
-  },
-  "& .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#000",
-    borderRadius: "8px",
-  },
-  "& .MuiInputLabel-root": {
-    color: "#000",
-  },
-  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#000",
-  },
-  "&:hover .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#000",
-  },
-}));
-const DarkSelect = styled(Select)(() => ({
-  backgroundColor: "#F4F5FE",
-  color: "#000",
-  borderRadius: "8px",
-  "& .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#000",
-  },
-  "& .MuiInputLabel-root": {
-    color: "#000",
-  },
-  "&:hover .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#000",
-  },
-  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#000",
-  },
-}));
-const TextArea = (props) => (
-  <DarkTextField
-    {...props}
-    multiline
-    rows={4}
-    variant="outlined"
-    fullWidth
-    margin="normal"
-    sx={{ backgroundColor: "#F4F5FE", color: "#000" }}
-  />
-);
-const DateField = (props) => (
-  <DarkTextField
-    {...props}
-    type="date"
-    variant="outlined"
-    InputLabelProps={{ shrink: true }}
-    fullWidth
-    margin="normal"
-    sx={{ backgroundColor: "#F4F5FE", color: "#000" }}
-  />
-);
-const UploadImage = ({ onChange, label }) => (
-  <Box
-    sx={{
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      border: "1px dashed #000",
-      borderRadius: 2,
-      marginBottom: 3,
-      marginTop: 2,
-      height: "auto",
-      width: "100%",
-      maxWidth: 400,
-      mt: 15,
-      background: "#f0f0f0",
-    }}
-  >
-    <img src="../../imageupload.png" alt="Upload Icon" width={50} height={50} />
-    <Button
-      component="label"
-      sx={{
-        marginTop: 2,
-        color: "#000",
-        display: "flex",
-        alignItems: "center",
-      }}
-    >
-      <CloudUploadIcon fontSize="small" sx={{ marginRight: 1 }} />
-      {label}
-      <input type="file" hidden accept="image/*" onChange={onChange} />
-    </Button>
-    <Box sx={{ textAlign: "center", marginTop: 2 }}>
-      <Typography variant="caption" gutterBottom sx={{ color: "#000" }}>
-        File Format JPEG, PNG(600 x 600)
-      </Typography>
-    </Box>
-  </Box>
-);
-const AdditionalImage = ({ onChange, label }) => (
-  <Box
-    sx={{
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    }}
-  >
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        border: "1px dashed #000",
-        borderRadius: 2,
-        padding: 2,
-        marginBottom: 2,
-        height: "90px",
-        width: "50%",
-        mt: 15,
-      }}
-    >
-      <img
-        src="../../imageupload.png"
-        alt="Upload Icon"
-        width={50}
-        height={50}
-      />
-      <Button component="label" sx={{ marginTop: 2, color: "#000" }}>
-        <CloudUploadIcon fontSize="small" sx={{ marginRight: 1 }} />
-        {label}
-        <input
-          type="file"
-          hidden
-          accept="image/*"
-          multiple
-          onChange={onChange}
-        />
-      </Button>
-    </Box>
-  </Box>
-);
+import {
+  DarkQuill,
+  DarkTextField,
+  DarkSelect,
+  TextArea,
+  DateField,
+  UploadImage,
+  AdditionalImage,
+} from "./FormStyles";
+
 const NewInventory = () => {
   const navigate = useNavigate();
   const { addProduct, updateProduct, editingProduct, setProductToEdit } =
@@ -267,15 +116,6 @@ const NewInventory = () => {
     if (!formData.longDescription)
       tempErrors.longDescription = "Long Description is required";
     if (!formData.discount) tempErrors.discount = "Discount Type is required";
-    if (!formData.discountType)
-      tempErrors.discountType = "Discount Type is required";
-    if (!formData.discountPercentage)
-      tempErrors.discountPercentage = "Discount Percentage is required";
-    if (!formData.expiryDate) tempErrors.expiryDate = "Expiry Date is required";
-    if (!formData.expiryDateValue)
-      tempErrors.expiryDateValue = "Value is required";
-    if (!formData.returnDiscount)
-      tempErrors.returnDiscount = "Return Discount is required";
     if (!formData.dateAdded) tempErrors.dateAdded = "Date is required";
     if (!formData.timeAdded) tempErrors.timeAdded = "Time is required";
     if (!formData.coverImage) tempErrors.coverImage = "Cover Image is required";
@@ -286,7 +126,7 @@ const NewInventory = () => {
     }
 
     setErrors(tempErrors);
-    return Object.keys(tempErrors).length === 0; 
+    return Object.keys(tempErrors).length === 0;
   };
   const handleSubmit = (status) => (e) => {
     e.preventDefault();
@@ -307,8 +147,8 @@ const NewInventory = () => {
         container
         spacing={4}
         padding={4}
-        justifyContent={'center'}
-        alignContent={'center'}
+        justifyContent={"center"}
+        alignContent={"center"}
         sx={{ backgroundColor: "#F4F5FA" }}
       >
         <Grid
@@ -615,9 +455,15 @@ const NewInventory = () => {
               </Grid>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={6} md={4} sx={{
-    mt: { xs: 2, sm: 3, md: 0 }, 
-  }}>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={4}
+            sx={{
+              mt: { xs: 2, sm: 3, md: 0 },
+            }}
+          >
             <Paper
               sx={{
                 backgroundColor: "white",
@@ -653,8 +499,8 @@ const NewInventory = () => {
                         backgroundColor: "#fff",
                         borderRadius: "50%",
                         "&:hover": {
-                          color: "red", // Change the color to red on hover
-                          backgroundColor: "#f0f0f0", // Optional: Change the background on hover
+                          color: "red",
+                          backgroundColor: "#f0f0f0",
                         },
                       }}
                     >
@@ -720,10 +566,10 @@ const NewInventory = () => {
                           right: 8,
                           backgroundColor: "#fff",
                           borderRadius: "50%",
-                          color: "inherit", // Keep default color
+                          color: "inherit", 
                           "&:hover": {
-                            color: "red", // Change the color to red on hover
-                            backgroundColor: "#f0f0f0", // Optional: Change the background on hover
+                            color: "red", 
+                            backgroundColor: "#f0f0f0", 
                           },
                         }}
                       >

@@ -1,10 +1,11 @@
 import React from "react";
-import { Box, Grid, Button, Typography, Paper } from "@mui/material";
+import { Box, Grid, Button, Typography,} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import Dashboardtable from "./DashboardTable";
 import { TiFolderDelete } from "react-icons/ti";
 import { HiUsers } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import { DarkPaper } from "./DashboradStyle";
 const Dashboard = () => {
   const navigate = useNavigate();
   const handleAdd = () => {
@@ -45,7 +46,7 @@ const Dashboard = () => {
         </Box>
       </Grid>
       <Grid item xs={12} sm={6}>
-        <Paper
+        <DarkPaper
           sx={{
             padding: 3,
             backgroundColor: "#5570F1",
@@ -73,10 +74,10 @@ const Dashboard = () => {
               </Typography>
             </Box>
           </Box>
-        </Paper>
+        </DarkPaper>
       </Grid>
       <Grid item xs={12} sm={6}>
-        <Paper
+        <DarkPaper
           sx={{
             padding: 3,
             backgroundColor: "white",
@@ -140,12 +141,12 @@ const Dashboard = () => {
               </Typography>
             </Box>
           </Box>
-        </Paper>
+        </DarkPaper>
       </Grid>
       <Grid item xs={12} width={100}>
-        <Paper sx={{ padding: 3, borderRadius: "12px" }}>
+        <DarkPaper sx={{ padding: 3, borderRadius: "12px" }}>
           <Dashboardtable />
-        </Paper>
+        </DarkPaper>
       </Grid>
     </Grid>
   );
